@@ -3,6 +3,7 @@ package com.company.inventory.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +21,12 @@ public class CategoryRestController {
 	// 5.- se declara un onbeto interfaZ DE CATEGORY y se importa el servicio con nombre service
 	private ICategoryService service;
 	
+	/**
+	 * 
+	 *gfet all the categories
+	 * @return
+	 */
+	
 	// 4.- se aplica el metodo de mapeo por get y se llama a la _URI /category
 	@GetMapping("/category")
 	//3.- se crea el metodo publico para obtener todas las categorias
@@ -30,5 +37,22 @@ public class CategoryRestController {
 		 return response;
 		
 	}
+	
+	/**
+	 * get categories by id
+	 * @param id
+	 * @return
+	 */
+	
+	@GetMapping("/category/{id}")
+
+	public ResponseEntity<CategoryResponseRest> searchCategoryById(@PathVariable Long id){ // @PathVariable path variable sirve para recuperar la variable que se envia por la uri
+		
+		 ResponseEntity<CategoryResponseRest> response = service.searchByIb(id);
+		 return response;
+		
+	}
+	
+	
 	
 }

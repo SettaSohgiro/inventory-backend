@@ -1,6 +1,8 @@
 package com.company.inventory.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,6 +41,43 @@ public class CategoryServiceImpl implements ICategoryService{
 			// TODO: handle exception
 			// 8.- tambien se agrega una respuesta con error
 			response.setMetadata("respuesta no ok", "-1", "Error al consultar");
+			e.getStackTrace();
+			return new ResponseEntity<CategoryResponseRest>(response , HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<CategoryResponseRest>(response , HttpStatus.OK);
+		
+	}
+
+	
+	//este metodose agrega por que se agrego otro metodo en ICategoryService
+	@Override
+	@Transactional(readOnly = true) // tambien se agrega el metodo transaction
+	// esto tambien se agrega en el controlador
+	public ResponseEntity<CategoryResponseRest> searchByIb(Long id) {
+		
+		CategoryResponseRest response = new CategoryResponseRest(); // es lo mismo de arriba
+	
+		List<Category> list = new ArrayList<>();
+		try {
+			
+			Optional<Category> category = categoryDao.findById(id); // se importa de java.util
+			
+			if(category.isPresent()) {  // ispresent verifica si la category existe
+				list.add(category.get());
+				response.getCategoryResponse().setCategory(list);	
+				response.setMetadata("respuesta ok", "00", "Categoria encontrada");
+			}else {
+				
+				response.setMetadata("respuesta no ok", "-1", "Categoria no encontrada");
+				
+				return new ResponseEntity<CategoryResponseRest>(response , HttpStatus.NOT_FOUND);
+				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			// 8.- tambien se agrega una respuesta con error
+			response.setMetadata("respuesta no ok", "-1", "Error al consultar por id");
 			e.getStackTrace();
 			return new ResponseEntity<CategoryResponseRest>(response , HttpStatus.INTERNAL_SERVER_ERROR);
 		}
