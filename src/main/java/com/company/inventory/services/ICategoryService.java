@@ -2,6 +2,7 @@ package com.company.inventory.services;
 
 import org.springframework.http.ResponseEntity;
 
+import com.company.inventory.model.Category;
 import com.company.inventory.response.CategoryResponseRest;
 
 // 1.- Voy a declarar todos los métodos que va a tener mi clase de servicio que luego va a implementar.
@@ -13,5 +14,11 @@ public interface ICategoryService {
 	public ResponseEntity<CategoryResponseRest> search();
 	// 3.- metodo que va a obtener el id del registro y se debe enviar un parametro
 	public ResponseEntity<CategoryResponseRest> searchByIb(Long id);
+	
+	
+	// 3.- cuando esta listo elservicio y se quierre agregar otro aqui se debe realizar primero
+	//    metodo que va a guardar rl registro y se debe enviar 2 parametro . Category es la interfaz de datos
+	public ResponseEntity<CategoryResponseRest> save(Category category);
+	
 	
 }
