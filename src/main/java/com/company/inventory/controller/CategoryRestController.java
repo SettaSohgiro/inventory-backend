@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -73,5 +74,19 @@ public class CategoryRestController {
 		
 	}
 	
+	/**
+	 * Update Category
+	 * @param category
+	 * @param id
+	 * @return
+	 */
+	
+	@PutMapping("/category/{id}")
+	public ResponseEntity<CategoryResponseRest> update(@RequestBody Category category , @PathVariable Long id ){ // @PathVariable path variable sirve para recuperar la variable que se envia por la uri
+		
+		 ResponseEntity<CategoryResponseRest> response = service.update(category , id);
+		 return response;
+		
+	}
 	
 }

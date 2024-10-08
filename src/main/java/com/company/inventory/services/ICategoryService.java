@@ -16,9 +16,12 @@ public interface ICategoryService {
 	public ResponseEntity<CategoryResponseRest> searchByIb(Long id);
 	
 	
-	// 3.- cuando esta listo elservicio y se quierre agregar otro aqui se debe realizar primero
+	// 4.- cuando esta listo elservicio y se quierre agregar otro aqui se debe realizar primero
 	//    metodo que va a guardar rl registro y se debe enviar 2 parametro . Category es la interfaz de datos
 	public ResponseEntity<CategoryResponseRest> save(Category category);
+
+	// 5.- update de categoria recibe una Category para actualizar y el id para buscar la category
+	public ResponseEntity<CategoryResponseRest> update(Category category , Long id);
 	
 	
 }

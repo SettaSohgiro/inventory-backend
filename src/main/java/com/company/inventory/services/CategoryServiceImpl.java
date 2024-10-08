@@ -122,4 +122,48 @@ public class CategoryServiceImpl implements ICategoryService{
 		return new ResponseEntity<CategoryResponseRest>(response , HttpStatus.OK);
 	}
 	//despues se debe ir al controllador
+
+
+	@Override
+	@Transactional()
+	public ResponseEntity<CategoryResponseRest> update(Category category , Long id) {
+
+
+		CategoryResponseRest response = new CategoryResponseRest(); // es lo mismo de arriba
+		
+		List<Category> list = new ArrayList<>();
+		try {
+			
+			Optional<Category> categorySearch = categoryDao.findById(id);
+			
+			if(categorySearch.isPresent()) {
+				//se procedera a actualizar el registro
+				categorySearch.get().setName(category.getName());
+				categorySearch.get().setDescription(category.getDescription());
+				
+				Category categoryToUpdate = categoryDao.save(categorySearch.get());
+				
+				if(categoryToUpdate != null) {
+					list.add(categoryToUpdate);
+					response.getCategoryResponse().setCategory(list);
+					response.setMetadata("respuesta ok", "00", "Categoria Actualizada");
+				}
+				
+			}else {
+				
+				response.setMetadata("respuesta no ok", "-1", " categoria no encontrada");
+				return new ResponseEntity<CategoryResponseRest>(response , HttpStatus.BAD_REQUEST);
+				
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			// 8.- tambien se agrega una respuesta con error
+			response.setMetadata("respuesta no ok", "-1", "Error al grabar categoria");
+			e.getStackTrace();
+			return new ResponseEntity<CategoryResponseRest>(response , HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<CategoryResponseRest>(response , HttpStatus.OK);
+	}
 }
