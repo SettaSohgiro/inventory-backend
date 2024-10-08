@@ -23,5 +23,7 @@ public interface ICategoryService {
 	// 5.- update de categoria recibe una Category para actualizar y el id para buscar la category
 	public ResponseEntity<CategoryResponseRest> update(Category category , Long id);
 	
+	public ResponseEntity<CategoryResponseRest> deleteByIb(Long id);
+	
 	
 }
